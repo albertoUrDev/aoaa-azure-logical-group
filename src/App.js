@@ -1,53 +1,110 @@
 import * as React from "react";
-import { Dropdown, Toggle } from "@fluentui/react";
+import {
+  DefaultButton,
+  Dialog,
+  ChoiceGroup,
+  DialogFooter,
+  PrimaryButton,
+  TextField,
+} from "@fluentui/react";
+import { useBoolean } from "@fluentui/react-hooks";
 
 function App() {
-  let displayNames = [];
-  let options = [];
-  const url =
-    "https://management.azure.com/subscriptions?api-version=2020-01-01";
-  const dropdownStyles = {
-    dropdown: { width: 300 },
+  const [hideFirstDialog, { toggle: toggleHideFirstDialog }] = useBoolean(true);
+  const [hideSecondDialog, { toggle: toggleHideSecondDialog }] =
+    useBoolean(true);
+  const [hideThirdDialog, { toggle: toggleHideThirdDialog }] = useBoolean(true);
+  const options = [
+    { key: "OptimumGroup", text: "Optimum Group" },
+    { key: "SomeGroup", text: "SomeGroup" },
+    { key: "AnotherGroup", text: "AnotherGroup" },
+  ];
+  const options2 = [
+    { key: "Resource1", text: "Resource1" },
+    { key: "Resource2", text: "Resource2" },
+    { key: "Resource3", text: "Resource3" },
+  ];
+  const modelProps = {
+    isBlocking: true,
   };
-  function _onChange(ev, checked) {
-    console.log("toggle is " + (checked ? "checked" : "not checked"));
-  }
-  //update token everytime
-  const token = "123";
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url, {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const json = await response.json();
-        json.value.map((o) => displayNames.push(o.id));
-        displayNames.forEach((name) => options.push({ key: name, text: name }));
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  const dialogContentProps = {
+    title: "Budget Groups",
+  };
+  const dialog2ContentProps = {
+    title: "Create Budget Groups",
+  };
+  const dialog3ContentProps = {
+    title: "Alerts",
+  };
   return (
     <>
-      <Dropdown
-        placeholder="Select a logical group"
-        label="Select a logical group"
-        options={options}
-        styles={dropdownStyles}
-      />
-      <Toggle
-        label="My Toggle example"
-        defaultChecked
-        onText="Active"
-        offText="Disabled"
-        onChange={_onChange}
-        role="checkbox"
-      />
+      <div>
+        <DefaultButton
+          secondaryText="Opens the Sample Dialog"
+          onClick={toggleHideFirstDialog}
+          text="Budget Groups"
+        />
+        <Dialog
+          hidden={hideFirstDialog}
+          onDismiss={toggleHideFirstDialog}
+          dialogContentProps={dialogContentProps}
+          modalProps={modelProps}
+        >
+          <ChoiceGroup defaultSelectedKey="B" options={options} />
+          <DialogFooter>
+            <PrimaryButton
+              onClick={() => {
+                toggleHideFirstDialog();
+                toggleHideSecondDialog();
+              }}
+              text="AddNewGroup"
+            />
+            <DefaultButton onClick={toggleHideFirstDialog} text="Cancel" />
+          </DialogFooter>
+        </Dialog>
+        <Dialog
+          hidden={hideSecondDialog}
+          onDismiss={toggleHideSecondDialog}
+          dialogContentProps={dialog2ContentProps}
+          modalProps={modelProps}
+        >
+          <TextField label="Name" />
+          <TextField label="Budget" />
+          <TextField label="Owner" />
+          <ChoiceGroup defaultSelectedKey="B" options={options2} />
+          <DialogFooter>
+            <PrimaryButton
+              onClick={toggleHideSecondDialog}
+              text="Create Budget Group"
+            />
+            <DefaultButton onClick={toggleHideSecondDialog} text="Cancel" />
+          </DialogFooter>
+        </Dialog>
+      </div>
+      <div>
+        <DefaultButton
+          secondaryText="Opens the Sample Dialog"
+          onClick={toggleHideThirdDialog}
+          text="Alerts"
+        />
+        <Dialog
+          hidden={hideThirdDialog}
+          onDismiss={toggleHideThirdDialog}
+          dialogContentProps={dialog3ContentProps}
+          modalProps={modelProps}
+        >
+          <ChoiceGroup defaultSelectedKey="B" options={options} />
+          <DialogFooter>
+            <PrimaryButton
+              onClick={() => {
+                toggleHideThirdDialog();
+              }}
+              text="Save"
+            />
+            <DefaultButton onClick={toggleHideThirdDialog} text="Cancel" />
+          </DialogFooter>
+        </Dialog>
+      </div>
     </>
   );
 }
