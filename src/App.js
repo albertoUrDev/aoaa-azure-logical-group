@@ -1,5 +1,10 @@
 import * as React from "react";
-import { Dropdown, Toggle } from "@fluentui/react";
+import { Dropdown, Toggle} from "@fluentui/react";
+import { Nav, INavLinkGroup } from '@fluentui/react/lib/Nav';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import BudgetsPage from './components/BudgetsPage';
+import AlertsPage from './components/AlertsPage'; 
 
 function App() {
   let displayNames = [];
@@ -32,24 +37,20 @@ function App() {
     fetchData();
   }, []);
 
+
   return (
-    <>
-      <Dropdown
-        placeholder="Select a logical group"
-        label="Select a logical group"
-        options={options}
-        styles={dropdownStyles}
-      />
-      <Toggle
-        label="My Toggle example"
-        defaultChecked
-        onText="Active"
-        offText="Disabled"
-        onChange={_onChange}
-        role="checkbox"
-      />
-    </>
+    <div class="wrapper">
+    <Navbar />
+    <Router>
+      <Switch>
+        <Route path='/BudgetsPage' exact component={BudgetsPage}/>
+        <Route path='/AlertsPage' exact component={AlertsPage}/>
+      </Switch>
+    </Router>
+    </div>
+
   );
 }
+
 
 export default App;
