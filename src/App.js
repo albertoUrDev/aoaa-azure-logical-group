@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from 'react';
 import {
   DefaultButton,
   Modal,
@@ -17,10 +18,35 @@ import {
 import { useBoolean } from "@fluentui/react-hooks";
 
 function App() {
+
   const [hideFirstDialog, { toggle: toggleHideFirstDialog }] = useBoolean(true);
-  const [hideSecondDialog, { toggle: toggleHideSecondDialog }] =
-    useBoolean(true);
+  const [hideSecondDialog, { toggle: toggleHideSecondDialog }] = useBoolean(true);
   const [hideThirdDialog, { toggle: toggleHideThirdDialog }] = useBoolean(true);
+
+  const [alertListState, setAlerts] = useState([
+    {
+      key: "Alert1",
+      alertName: "Alert1",
+      description: "Budget group 1 has gone over its $300 budget",
+    },
+    {
+      key: "Alert2",
+      alertName: "Alert2",
+      description: "Budget group 2 has gone over its $5000 budget",
+    },
+  ]);
+  
+function removeAlert(item){
+  let result = [];
+              for(let i = 0; i < alertListState.length; ++i){
+                console.log(alertListState[i]);
+                if(alertListState[i].key !== item.key){
+                  result.push(alertListState[i]);
+                }
+                setAlerts(result);
+              }
+}
+
   const page1Content = [
     {
       Name: "Optimus Group",
@@ -138,20 +164,7 @@ function App() {
     { key: "Resource2", text: "Resource 2" },
     { key: "Resource3", text: "Resource 3" },
   ];
-  const alertList = [
-    {
-      key: "Alert1",
-      alertName: "Alert1",
-      description: "Budget group 1 has gone over its $300 budget",
-      delete: "X",
-    },
-    {
-      key: "Alert2",
-      alertName: "Alert2",
-      description: "Budget group 2 has gone over its $5000 budget",
-      delete: "X",
-    },
-  ];
+  const alertList = alertListState;
   const modelProps = {
     isBlocking: true,
   };
@@ -188,8 +201,19 @@ function App() {
       minWidth: 50,
       maxWidth: 100,
       isResizable: true,
+      onRender: (item) => (
+        <DefaultButton onClick={ ()=>removeAlert(item)} text="X" />
+      )
     },
   ];
+
+
+
+
+ function componentDidMount(){
+  setAlerts(alertList);
+}
+
   return (
     <>
       <div className="modal-tab-size">
@@ -264,15 +288,15 @@ function App() {
           containerClassName={ModalStyle.container}
         >
           <DetailsList
-            items={alertList}
+            items={alertListState}
             columns={alertColumns}
             setKey="set"
             layoutMode={DetailsListLayoutMode.fixed}
             selectionMode="none"
             checkboxVisibility={CheckboxVisibility.hidden}
-            onItemInvoked={(item) =>
-              alert("Alert details: " + item.description)
-            }
+           // onItemInvoked={(item) => {
+            //  removeAlert(item)
+           // }}
           />
           <DialogFooter>
             <DefaultButton onClick={toggleHideThirdDialog} text="Cancel" />
