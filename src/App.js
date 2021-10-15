@@ -9,11 +9,17 @@ import {
   TextField,
   mergeStyleSets,
   Stack,
+  DetailsRow,
+  MarqueeSelection,
+  IconButton,
+  getTheme,
+  FontWeights,
 } from "@fluentui/react";
 import {
   DetailsList,
   DetailsListLayoutMode,
   CheckboxVisibility,
+  DetailsHeader,
 } from "@fluentui/react/lib/DetailsList";
 import { useBoolean } from "@fluentui/react-hooks";
 
@@ -76,22 +82,15 @@ function removeAlert(item){
       key: "Group Name",
       name: "GroupName",
       fieldName: "GroupName",
-      minWidth: 100,
-      maxWidth: 200,
-    },
-    {
-      key: "Budget",
-      name: "Budget",
-      fieldName: "Budget",
-      minWidth: 100,
+      minWidth: 200,
       maxWidth: 200,
     },
     {
       key: "Description",
       name: "Description",
       fieldName: "Description",
-      minWidth: 100,
-      maxWidth: 200,
+      minWidth: 300,
+      maxWidth: 300,
     },
   ];
   const items = [
@@ -155,8 +154,6 @@ function removeAlert(item){
       display: "flex",
       flexFlow: "column nowrap",
       alignItems: "stretch",
-      width: "800px",
-      height: "800px",
     },
   });
   const options2 = [
@@ -164,6 +161,7 @@ function removeAlert(item){
     { key: "Resource2", text: "Resource 2" },
     { key: "Resource3", text: "Resource 3" },
   ];
+
   const alertList = alertListState;
   const modelProps = {
     isBlocking: true,
@@ -174,6 +172,7 @@ function removeAlert(item){
   const dialog2ContentProps = {
     title: "Create Budget Groups",
   };
+
   const dialog3ContentProps = {
     title: "Alerts",
   };
@@ -214,13 +213,58 @@ function removeAlert(item){
   setAlerts(alertList);
 }
 
+  const theme = getTheme();
+  const contentStyles = mergeStyleSets({
+    container: {
+      display: "flex",
+      flexFlow: "column nowrap",
+      alignItems: "stretch",
+      width: "900px",
+    },
+    header: [
+      theme.fonts.xxLarge,
+      {
+        flex: "1 1 auto",
+        borderTop: `4px solid ${theme.palette.themePrimary}`,
+        color: theme.palette.neutralPrimary,
+        display: "flex",
+        alignItems: "center",
+        fontWeight: FontWeights.semibold,
+        padding: "12px 12px 14px 24px",
+      },
+    ],
+    body: {
+      flex: "4 4 auto",
+      padding: "0 24px 24px 24px",
+      overflowY: "hidden",
+      selectors: {
+        p: { margin: "14px 0" },
+        "p:first-child": { marginTop: 0 },
+        "p:last-child": { marginBottom: 0 },
+      },
+    },
+  });
+  const iconButtonStyles = {
+    root: {
+      color: theme.palette.neutralPrimary,
+      marginLeft: "auto",
+      marginTop: "4px",
+      marginRight: "2px",
+    },
+    rootHovered: {
+      color: theme.palette.neutralDark,
+    },
+  };
+
+
   return (
     <>
-      <div className="modal-tab-size">
+      <div>
         <DefaultButton
           secondaryText="Opens the Sample Dialog"
           onClick={toggleHideFirstDialog}
           text="Budget Groups"
+          styles={{ root: { width: "135px" } }}
         />
         <Modal
           isOpen={!hideFirstDialog}
@@ -228,21 +272,29 @@ function removeAlert(item){
           isBlocking={false}
           containerClassName={ModalStyle.container}
         >
-          <Stack
-            horizontalAlign="center"
-            verticalAlign="center"
-            styles={{ root: { height: "100px" } }}
-          >
+          <div className={contentStyles.header}>
             <h1>Budget Groups</h1>
-          </Stack>
-          <Stack horizontalAlign="center">
+            <IconButton
+              styles={iconButtonStyles}
+              iconProps={{ iconName: "Cancel" }}
+              onClick={toggleHideFirstDialog}
+            />
+          </div>
+          <div className={contentStyles.body}>
             <DetailsList
               items={items}
               groups={groups}
               columns={columns}
               compact={true}
+              onRenderDetailsHeader={(props) => (
+                <DetailsHeader
+                  {...props}
+                  styles={{ root: { fontWeight: FontWeights.semibold } }}
+                />
+              )}
+              onRenderRow={(props) => <DetailsRow {...props} />}
             />
-          </Stack>
+          </div>
           <Stack verticalAlign="end" horizontalAlign="end">
             <DialogFooter>
               <PrimaryButton
@@ -262,24 +314,35 @@ function removeAlert(item){
           isBlocking={false}
           containerClassName={ModalStyle.container}
         >
-          <TextField label="Name" />
-          <TextField label="Budget" />
-          <TextField label="Owner" />
-          <ChoiceGroup defaultSelectedKey="B" options={options2} />
-          <DialogFooter>
-            <PrimaryButton
-              onClick={toggleHideSecondDialog}
-              text="Create Budget Group"
+          <div className={contentStyles.header}>
+            <h1>Create New Budget Groups</h1>
+            <IconButton
+              styles={iconButtonStyles}
+              iconProps={{ iconName: "Cancel" }}
+              onClick={toggleHideFirstDialog}
             />
-            <DefaultButton onClick={toggleHideSecondDialog} text="Cancel" />
-          </DialogFooter>
+          </div>
+          <div className={contentStyles.body}>
+            <TextField label="Name" />
+            <TextField label="Budget" />
+            <TextField label="Owner" />
+            <ChoiceGroup defaultSelectedKey="B" options={options2} />
+            <DialogFooter>
+              <PrimaryButton
+                onClick={toggleHideSecondDialog}
+                text="Create Budget Group"
+              />
+              <DefaultButton onClick={toggleHideSecondDialog} text="Cancel" />
+            </DialogFooter>
+          </div>
         </Modal>
       </div>
-      <div className="modal-tab-size">
+      <div>
         <DefaultButton
           secondaryText="Opens the Sample Dialog"
           onClick={toggleHideThirdDialog}
           text="Alerts"
+          styles={{ root: { width: "135px" } }}
         />
         <Modal
           isOpen={!hideThirdDialog}
@@ -287,17 +350,28 @@ function removeAlert(item){
           isBlocking={false}
           containerClassName={ModalStyle.container}
         >
-          <DetailsList
-            items={alertListState}
-            columns={alertColumns}
-            setKey="set"
-            layoutMode={DetailsListLayoutMode.fixed}
-            selectionMode="none"
-            checkboxVisibility={CheckboxVisibility.hidden}
-           // onItemInvoked={(item) => {
-            //  removeAlert(item)
-           // }}
-          />
+
+          <div className={contentStyles.header}>
+            <h1>Alerts</h1>
+            <IconButton
+              styles={iconButtonStyles}
+              iconProps={{ iconName: "Cancel" }}
+              onClick={toggleHideFirstDialog}
+            />
+          </div>
+          <div className={contentStyles.body}>
+            <DetailsList
+              items={alertListState}
+              columns={alertColumns}
+              setKey="set"
+              layoutMode={DetailsListLayoutMode.fixed}
+              selectionMode="none"
+              checkboxVisibility={CheckboxVisibility.hidden}
+              onItemInvoked={(item) =>
+                alert("Alert details: " + item.description)
+              }
+            />
+          </div>
           <DialogFooter>
             <DefaultButton onClick={toggleHideThirdDialog} text="Cancel" />
           </DialogFooter>
