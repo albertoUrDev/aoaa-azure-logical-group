@@ -61,44 +61,57 @@ function App() {
     },
     {
       key: "Description",
-      name: "Description",
+      name: "Type",
       fieldName: "Description",
       minWidth: 300,
       maxWidth: 300,
-    },
+      },
+      {
+          key: "Subscription",
+          name: "Subscription/ResourceGroup",
+          fieldName: "Subscription",
+          minWidth: 300,
+          maxWidth: 300,
+      },
   ];
-  const items = [
-    {
-      key: "Test Storage Account",
-      GroupName: "Test Storage Account",
-      Description: "storage account",
-    },
-    {
-      key: "Test Azure Function",
-      GroupName: "Test Azure Function",
-      Description: "azure function",
-    },
-    {
-      key: "Test Storage Account",
-      GroupName: "Test Storage Account",
-      Description: "storage account",
-    },
-    {
-      key: "Test Storage Account",
-      GroupName: "Test Storage Account",
-      Description: "storage account",
-    },
-    {
-      key: "Test Azure Function",
-      GroupName: "Test Azure Function",
-      Description: "azure function",
-    },
-    {
-      key: "Test App Service",
-      GroupName: "Test App Service",
-      Description: "app service",
-    },
-  ];
+    const items = [
+        {
+            "key": "budgetforecastpremium-prod",
+            "GroupName": "budgetforecastpremium-prod",
+            "Description": "sites",
+            "Subscription": "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2"
+        },
+        {
+            "key": "budgetalertdetection-prod-law",
+            "GroupName": "budgetalertdetection-prod-law",
+            "Description": "workspaces",
+            "Subscription": "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2"
+        },
+        {
+            "key": "azsk20200604225038",
+            "GroupName": "azsk20200604225038",
+            "Description": "storageAccounts",
+            "Subscription": "MSFT-AOABudgetForecastingNAlert-02/AzSKRG"
+        },
+        {
+            "key": "cognitoprod",
+            "GroupName": "cognitoprod",
+            "Description": "Clusters",
+            "Subscription": "MSFT-AOAAnalytics-Prod/cognitoprod"
+        },
+        {
+            "key": "azskcseaoaasa",
+            "GroupName": "azskcseaoaasa",
+            "Description": "storageAccounts",
+            "Subscription": "MSFT-AOAAnalytics-Prod/azsk-cse-aoaa-rg"
+        },
+        {
+            "key": "gsm625068112xt",
+            "GroupName": "gsm625068112xt",
+            "Description": "storageAccounts",
+            "Subscription": "MSFT-AOAAnalytics-Prod/GenevaWarmPathManageRG"
+        }
+    ];
   // This is based on the definition of items
   const groups = [
     {
@@ -131,9 +144,15 @@ function App() {
     },
   });
   const options2 = [
-    { key: "Resource1", text: "Resource 1" },
-    { key: "Resource2", text: "Resource 2" },
-    { key: "Resource3", text: "Resource 3" },
+      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourcegroups/npr-budgetforecastalerting/providers/microsoft.web/sites/budgetforecastpremium-dev", text: "budgetforecastpremium-dev" },
+      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourceGroups/NPR-az-Proactive-reporting/providers/Microsoft.Storage/storageAccounts/azproactivestorage", text: "azproactivestorage" },
+      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourcegroups/npr-budgetforecastalerting/providers/microsoft.web/sites/desperado-dev", text: "desperado-dev" },
+      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourceGroups/F365-Sync-NPR/providers/Microsoft.Storage/storageAccounts/finservicetreeintegdevaz", text: "finservicetreeintegdevaz" },
+      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourcegroups/npr-az-proactive-reporting/providers/microsoft.web/sites/az-cost-reporter", text: "az-cost-reporter" },
+      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourceGroups/NPR-shbeg/providers/Microsoft.Kusto/Clusters/nprazurespendimport", text: "nprazurespendimport" },
+      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourceGroups/f365-sync-npr/providers/Microsoft.Storage/storageAccounts/finimportvalidationsa", text: "finimportvalidationsa" },
+      { key: "/SUBSCRIPTIONS/30E77E63-38A6-4878-AC82-870D9E7B7766/RESOURCEGROUPS/NPR-BUDGETFORECASTALERTING/PROVIDERS/MICROSOFT.LOGIC/WORKFLOWS/TESTNEWSERVICESWITHNOPROJECTS", text: "TESTNEWSERVICESWITHNOPROJECTS" },
+      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourceGroups/NPR-BudgetForecastAlerting/providers/Microsoft.Storage/storageAccounts/budgetdatadev", text: "budgetdatadev" },
   ];
   const alertList = [
     {
@@ -221,6 +240,23 @@ function App() {
     },
   };
 
+    function addBudgetGroup() {
+        items.push({
+            key: "Test test",
+            GroupName: "Test test",
+            Description: "Test test",
+        });
+        groups.push({
+            key: "Another Group test",
+            name: "Another Group - 1010testtes",
+            startIndex: 4,
+            count: 1,
+            level: 0,
+        });
+        console.log(items);
+        console.log(groups);
+    }
+
   return (
     <>
       <div>
@@ -292,8 +328,11 @@ function App() {
             <TextField label="Owner" />
             <ChoiceGroup defaultSelectedKey="B" options={options2} />
             <DialogFooter>
-              <PrimaryButton
-                onClick={toggleHideSecondDialog}
+                          <PrimaryButton
+                              onClick={() => {
+                                  addBudgetGroup();
+                                  toggleHideSecondDialog();
+                              }}
                 text="Create Budget Group"
               />
               <DefaultButton onClick={toggleHideSecondDialog} text="Cancel" />
