@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from 'react';
 import {
   DefaultButton,
   Modal,
@@ -23,10 +24,35 @@ import {
 import { useBoolean } from "@fluentui/react-hooks";
 
 function App() {
+
   const [hideFirstDialog, { toggle: toggleHideFirstDialog }] = useBoolean(true);
-  const [hideSecondDialog, { toggle: toggleHideSecondDialog }] =
-    useBoolean(true);
+  const [hideSecondDialog, { toggle: toggleHideSecondDialog }] = useBoolean(true);
   const [hideThirdDialog, { toggle: toggleHideThirdDialog }] = useBoolean(true);
+
+  const [alertListState, setAlerts] = useState([
+    {
+      key: "Alert1",
+      alertName: "Alert1",
+      description: "Budget group 1 has gone over its $300 budget",
+    },
+    {
+      key: "Alert2",
+      alertName: "Alert2",
+      description: "Budget group 2 has gone over its $5000 budget",
+    },
+  ]);
+  
+function removeAlert(item){
+  let result = [];
+              for(let i = 0; i < alertListState.length; ++i){
+                console.log(alertListState[i]);
+                if(alertListState[i].key !== item.key){
+                  result.push(alertListState[i]);
+                }
+                setAlerts(result);
+              }
+}
+
   const page1Content = [
     {
       Name: "Optimus Group",
@@ -135,20 +161,18 @@ function App() {
     { key: "Resource2", text: "Resource 2" },
     { key: "Resource3", text: "Resource 3" },
   ];
-  const alertList = [
-    {
-      key: "Alert1",
-      alertName: "Alert1",
-      description: "Budget group 1 has gone over its $300 budget",
-      delete: "X",
-    },
-    {
-      key: "Alert2",
-      alertName: "Alert2",
-      description: "Budget group 2 has gone over its $5000 budget",
-      delete: "X",
-    },
-  ];
+
+  const alertList = alertListState;
+  const modelProps = {
+    isBlocking: true,
+  };
+  const dialogContentProps = {
+    title: "Budget Groups",
+  };
+  const dialog2ContentProps = {
+    title: "Create Budget Groups",
+  };
+
   const dialog3ContentProps = {
     title: "Alerts",
   };
@@ -176,8 +200,19 @@ function App() {
       minWidth: 50,
       maxWidth: 100,
       isResizable: true,
+      onRender: (item) => (
+        <DefaultButton onClick={ ()=>removeAlert(item)} text="X" />
+      )
     },
   ];
+
+
+
+
+ function componentDidMount(){
+  setAlerts(alertList);
+}
+
   const theme = getTheme();
   const contentStyles = mergeStyleSets({
     container: {
@@ -220,6 +255,7 @@ function App() {
       color: theme.palette.neutralDark,
     },
   };
+
 
   return (
     <>
@@ -314,6 +350,7 @@ function App() {
           isBlocking={false}
           containerClassName={ModalStyle.container}
         >
+
           <div className={contentStyles.header}>
             <h1>Alerts</h1>
             <IconButton
@@ -324,7 +361,7 @@ function App() {
           </div>
           <div className={contentStyles.body}>
             <DetailsList
-              items={alertList}
+              items={alertListState}
               columns={alertColumns}
               setKey="set"
               layoutMode={DetailsListLayoutMode.fixed}
