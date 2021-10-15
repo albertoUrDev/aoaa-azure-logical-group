@@ -32,13 +32,13 @@ function App() {
   const [alertListState, setAlerts] = useState([
     {
       key: "Alert1",
-      alertName: "Alert1",
-      description: "Budget group 1 has gone over its $300 budget",
+      alertName: "Optimus Group",
+      description: "Optimus Group has gone over its $500 budget",
     },
     {
       key: "Alert2",
-      alertName: "Alert2",
-      description: "Budget group 2 has gone over its $5000 budget",
+      alertName: "Some Group",
+      description: "Some Group 2 has gone over its $100 budget",
     },
   ]);
   
