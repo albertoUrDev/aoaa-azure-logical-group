@@ -143,17 +143,56 @@ function App() {
       alignItems: "stretch",
     },
   });
-  const options2 = [
-      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourcegroups/npr-budgetforecastalerting/providers/microsoft.web/sites/budgetforecastpremium-dev", text: "budgetforecastpremium-dev" },
-      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourceGroups/NPR-az-Proactive-reporting/providers/Microsoft.Storage/storageAccounts/azproactivestorage", text: "azproactivestorage" },
-      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourcegroups/npr-budgetforecastalerting/providers/microsoft.web/sites/desperado-dev", text: "desperado-dev" },
-      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourceGroups/F365-Sync-NPR/providers/Microsoft.Storage/storageAccounts/finservicetreeintegdevaz", text: "finservicetreeintegdevaz" },
-      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourcegroups/npr-az-proactive-reporting/providers/microsoft.web/sites/az-cost-reporter", text: "az-cost-reporter" },
-      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourceGroups/NPR-shbeg/providers/Microsoft.Kusto/Clusters/nprazurespendimport", text: "nprazurespendimport" },
-      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourceGroups/f365-sync-npr/providers/Microsoft.Storage/storageAccounts/finimportvalidationsa", text: "finimportvalidationsa" },
-      { key: "/SUBSCRIPTIONS/30E77E63-38A6-4878-AC82-870D9E7B7766/RESOURCEGROUPS/NPR-BUDGETFORECASTALERTING/PROVIDERS/MICROSOFT.LOGIC/WORKFLOWS/TESTNEWSERVICESWITHNOPROJECTS", text: "TESTNEWSERVICESWITHNOPROJECTS" },
-      { key: "/subscriptions/30e77e63-38a6-4878-ac82-870d9e7b7766/resourceGroups/NPR-BudgetForecastAlerting/providers/Microsoft.Storage/storageAccounts/budgetdatadev", text: "budgetdatadev" },
-  ];
+    const options2 = [
+        {
+            "key": "budgetforecastpremium-prod",
+            "text": "budgetforecastpremium-prod"
+        },
+        {
+            "key": "budgetalertdetection-prod-law",
+            "text": "budgetalertdetection-prod-law"
+        },
+        {
+            "key": "azsk20200604225038",
+            "text": "azsk20200604225038"
+        },
+        {
+            "key": "cognitoprod",
+            "text": "cognitoprod"
+        },
+        {
+            "key": "azskcseaoaasa",
+            "text": "azskcseaoaasa"
+        },
+        {
+            "key": "gsm625068112xt",
+            "text": "gsm625068112xt"
+        },
+        {
+            "key": "synccorefunction20200609",
+            "text": "synccorefunction20200609"
+        },
+        {
+            "key": "TESTFACTORY20210503235301",
+            "text": "TESTFACTORY20210503235301"
+        },
+        {
+            "key": "hackathoncostusage",
+            "text": "hackathoncostusage"
+        },
+        {
+            "key": "desperado-dev",
+            "text": "desperado-dev"
+        },
+        {
+            "key": "budgetforecastpremium-dev",
+            "text": "budgetforecastpremium-dev"
+        },
+        {
+            "key": "azproactivestorage",
+            "text": "azproactivestorage"
+        }
+    ];
   const alertList = [
     {
       key: "Alert1",
@@ -326,7 +365,7 @@ function App() {
             <TextField label="Name" />
             <TextField label="Budget" />
             <TextField label="Owner" />
-            <ChoiceGroup defaultSelectedKey="B" options={options2} />
+                      <ChoiceGroup defaultSelectedKey="B" options={options2} />
             <DialogFooter>
                           <PrimaryButton
                               onClick={() => {
