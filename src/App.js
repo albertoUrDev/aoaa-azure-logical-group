@@ -1,13 +1,19 @@
 import * as React from "react";
 import {
   DefaultButton,
-  Dialog,
+  Modal,
   ChoiceGroup,
   DialogFooter,
   PrimaryButton,
   TextField,
+  mergeStyleSets,
+  Stack,
 } from "@fluentui/react";
-import { DetailsList, DetailsListLayoutMode, Selection, IColumn, CheckboxVisibility } from '@fluentui/react/lib/DetailsList';
+import {
+  DetailsList,
+  DetailsListLayoutMode,
+  CheckboxVisibility,
+} from "@fluentui/react/lib/DetailsList";
 import { useBoolean } from "@fluentui/react-hooks";
 
 function App() {
@@ -15,20 +21,137 @@ function App() {
   const [hideSecondDialog, { toggle: toggleHideSecondDialog }] =
     useBoolean(true);
   const [hideThirdDialog, { toggle: toggleHideThirdDialog }] = useBoolean(true);
-  const options = [
-    { key: "OptimumGroup", text: "Optimum Group" },
-    { key: "SomeGroup", text: "SomeGroup" },
-    { key: "AnotherGroup", text: "AnotherGroup" },
+  const page1Content = [
+    {
+      Name: "Optimus Group",
+      Budget: 300,
+      resources: [
+        { Name: "Test Storage Account", type: "storage account" },
+        { Name: "Test Azure Function", type: "azure function" },
+      ],
+    },
+    {
+      Name: "Some Group",
+      Budget: 300,
+      resources: [{ Name: "Test Storage Account", type: "storage account" }],
+    },
+    {
+      Name: "Another Group",
+      Budget: 300,
+      resources: [
+        { Name: "Test Storage Account", type: "storage account" },
+        { Name: "Test Azure Function", type: "azure function" },
+        { Name: "Test App Service", type: "app service" },
+      ],
+    },
   ];
+  const columns = [
+    {
+      key: "Group Name",
+      name: "GroupName",
+      fieldName: "GroupName",
+      minWidth: 100,
+      maxWidth: 200,
+    },
+    {
+      key: "Budget",
+      name: "Budget",
+      fieldName: "Budget",
+      minWidth: 100,
+      maxWidth: 200,
+    },
+    {
+      key: "Description",
+      name: "Description",
+      fieldName: "Description",
+      minWidth: 100,
+      maxWidth: 200,
+    },
+  ];
+  const items = [
+    {
+      key: "Test Storage Account",
+      GroupName: "Test Storage Account",
+      Description: "storage account",
+    },
+    {
+      key: "Test Azure Function",
+      GroupName: "Test Azure Function",
+      Description: "azure function",
+    },
+    {
+      key: "Test Storage Account",
+      GroupName: "Test Storage Account",
+      Description: "storage account",
+    },
+    {
+      key: "Test Storage Account",
+      GroupName: "Test Storage Account",
+      Description: "storage account",
+    },
+    {
+      key: "Test Azure Function",
+      GroupName: "Test Azure Function",
+      Description: "azure function",
+    },
+    {
+      key: "Test App Service",
+      GroupName: "Test App Service",
+      Description: "app service",
+    },
+  ];
+  // This is based on the definition of items
+  const groups = [
+    {
+      key: "Optimus Group",
+      name: "Optimus Group - 500",
+      startIndex: 0,
+      count: 2,
+      level: 0,
+    },
+    {
+      key: "Some Group",
+      name: "Some Group - 100",
+      startIndex: 2,
+      count: 1,
+      level: 0,
+    },
+    {
+      key: "Another Group",
+      name: "Another Group - 1010",
+      startIndex: 3,
+      count: 3,
+      level: 0,
+    },
+  ];
+  const ModalStyle = mergeStyleSets({
+    container: {
+      display: "flex",
+      flexFlow: "column nowrap",
+      alignItems: "stretch",
+      width: "800px",
+      height: "800px",
+    },
+  });
   const options2 = [
-    { key: "Resource1", text: "Resource1" },
-    { key: "Resource2", text: "Resource2" },
-    { key: "Resource3", text: "Resource3" },
+    { key: "Resource1", text: "Resource 1" },
+    { key: "Resource2", text: "Resource 2" },
+    { key: "Resource3", text: "Resource 3" },
   ];
   const alertList = [
-      { key: "Alert1", alertName:"Alert1", description: "Budget group 1 has gone over its $300 budget", delete:"X" },
-      { key: "Alert2", alertName:"Alert2", description: "Budget group 2 has gone over its $5000 budget", delete:"X" },
-  ]
+    {
+      key: "Alert1",
+      alertName: "Alert1",
+      description: "Budget group 1 has gone over its $300 budget",
+      delete: "X",
+    },
+    {
+      key: "Alert2",
+      alertName: "Alert2",
+      description: "Budget group 2 has gone over its $5000 budget",
+      delete: "X",
+    },
+  ];
   const modelProps = {
     isBlocking: true,
   };
@@ -42,10 +165,31 @@ function App() {
     title: "Alerts",
   };
   const alertColumns = [
-      { key: 'alertName', name: 'Alert Name', fieldName: 'alertName', minWidth: 100, maxWidth: 200, isResizable: true },
-      { key: 'description', name: 'Description', fieldName: 'description', minWidth: 150, maxWidth: 300, isResizable: true },
-      { key: 'delete', name: 'Delete', fieldName: 'delete', minWidth: 50, maxWidth: 100, isResizable: true },
-  ]
+    {
+      key: "alertName",
+      name: "Alert Name",
+      fieldName: "alertName",
+      minWidth: 100,
+      maxWidth: 200,
+      isResizable: true,
+    },
+    {
+      key: "description",
+      name: "Description",
+      fieldName: "description",
+      minWidth: 150,
+      maxWidth: 300,
+      isResizable: true,
+    },
+    {
+      key: "delete",
+      name: "Delete",
+      fieldName: "delete",
+      minWidth: 50,
+      maxWidth: 100,
+      isResizable: true,
+    },
+  ];
   return (
     <>
       <div className="modal-tab-size">
@@ -54,29 +198,45 @@ function App() {
           onClick={toggleHideFirstDialog}
           text="Budget Groups"
         />
-        <Dialog
-          hidden={hideFirstDialog}
+        <Modal
+          isOpen={!hideFirstDialog}
           onDismiss={toggleHideFirstDialog}
-          dialogContentProps={dialogContentProps}
-          modalProps={modelProps}
+          isBlocking={false}
+          containerClassName={ModalStyle.container}
         >
-          <ChoiceGroup defaultSelectedKey="B" options={options} />
-          <DialogFooter>
-            <PrimaryButton
-              onClick={() => {
-                toggleHideFirstDialog();
-                toggleHideSecondDialog();
-              }}
-              text="AddNewGroup"
+          <Stack
+            horizontalAlign="center"
+            verticalAlign="center"
+            styles={{ root: { height: "100px" } }}
+          >
+            <h1>Budget Groups</h1>
+          </Stack>
+          <Stack horizontalAlign="center">
+            <DetailsList
+              items={items}
+              groups={groups}
+              columns={columns}
+              compact={true}
             />
-            <DefaultButton onClick={toggleHideFirstDialog} text="Cancel" />
-          </DialogFooter>
-        </Dialog>
-        <Dialog
-          hidden={hideSecondDialog}
+          </Stack>
+          <Stack verticalAlign="end" horizontalAlign="end">
+            <DialogFooter>
+              <PrimaryButton
+                onClick={() => {
+                  toggleHideFirstDialog();
+                  toggleHideSecondDialog();
+                }}
+                text="Add New Group"
+              />
+              <DefaultButton onClick={toggleHideFirstDialog} text="Cancel" />
+            </DialogFooter>
+          </Stack>
+        </Modal>
+        <Modal
+          isOpen={!hideSecondDialog}
           onDismiss={toggleHideSecondDialog}
-          dialogContentProps={dialog2ContentProps}
-          modalProps={modelProps}
+          isBlocking={false}
+          containerClassName={ModalStyle.container}
         >
           <TextField label="Name" />
           <TextField label="Budget" />
@@ -89,7 +249,7 @@ function App() {
             />
             <DefaultButton onClick={toggleHideSecondDialog} text="Cancel" />
           </DialogFooter>
-        </Dialog>
+        </Modal>
       </div>
       <div className="modal-tab-size">
         <DefaultButton
@@ -97,11 +257,11 @@ function App() {
           onClick={toggleHideThirdDialog}
           text="Alerts"
         />
-        <Dialog
-          hidden={hideThirdDialog}
-          onDismiss={toggleHideThirdDialog}
-          dialogContentProps={dialog3ContentProps}
-          modalProps={modelProps}
+        <Modal
+          isOpen={!hideThirdDialog}
+          onDismiss={dialog3ContentProps}
+          isBlocking={false}
+          containerClassName={ModalStyle.container}
         >
           <DetailsList
             items={alertList}
@@ -110,12 +270,14 @@ function App() {
             layoutMode={DetailsListLayoutMode.fixed}
             selectionMode="none"
             checkboxVisibility={CheckboxVisibility.hidden}
-            onItemInvoked={(item) => alert('Alert details: '+ item.description)}
+            onItemInvoked={(item) =>
+              alert("Alert details: " + item.description)
+            }
           />
           <DialogFooter>
             <DefaultButton onClick={toggleHideThirdDialog} text="Cancel" />
           </DialogFooter>
-        </Dialog>
+        </Modal>
       </div>
     </>
   );
