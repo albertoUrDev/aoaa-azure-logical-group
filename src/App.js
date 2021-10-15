@@ -7,6 +7,7 @@ import {
   PrimaryButton,
   TextField,
 } from "@fluentui/react";
+import { DetailsList, DetailsListLayoutMode, Selection, IColumn, CheckboxVisibility } from '@fluentui/react/lib/DetailsList';
 import { useBoolean } from "@fluentui/react-hooks";
 
 function App() {
@@ -24,6 +25,10 @@ function App() {
     { key: "Resource2", text: "Resource2" },
     { key: "Resource3", text: "Resource3" },
   ];
+  const alertList = [
+      { key: "Alert1", alertName:"Alert1", description: "Budget group 1 has gone over its $300 budget", delete:"X" },
+      { key: "Alert2", alertName:"Alert2", description: "Budget group 2 has gone over its $5000 budget", delete:"X" },
+  ]
   const modelProps = {
     isBlocking: true,
   };
@@ -36,9 +41,14 @@ function App() {
   const dialog3ContentProps = {
     title: "Alerts",
   };
+  const alertColumns = [
+      { key: 'alertName', name: 'Alert Name', fieldName: 'alertName', minWidth: 100, maxWidth: 200, isResizable: true },
+      { key: 'description', name: 'Description', fieldName: 'description', minWidth: 150, maxWidth: 300, isResizable: true },
+      { key: 'delete', name: 'Delete', fieldName: 'delete', minWidth: 50, maxWidth: 100, isResizable: true },
+  ]
   return (
     <>
-      <div>
+      <div className="modal-tab-size">
         <DefaultButton
           secondaryText="Opens the Sample Dialog"
           onClick={toggleHideFirstDialog}
@@ -81,7 +91,7 @@ function App() {
           </DialogFooter>
         </Dialog>
       </div>
-      <div>
+      <div className="modal-tab-size">
         <DefaultButton
           secondaryText="Opens the Sample Dialog"
           onClick={toggleHideThirdDialog}
@@ -93,14 +103,16 @@ function App() {
           dialogContentProps={dialog3ContentProps}
           modalProps={modelProps}
         >
-          <ChoiceGroup defaultSelectedKey="B" options={options} />
+          <DetailsList
+            items={alertList}
+            columns={alertColumns}
+            setKey="set"
+            layoutMode={DetailsListLayoutMode.fixed}
+            selectionMode="none"
+            checkboxVisibility={CheckboxVisibility.hidden}
+            onItemInvoked={(item) => alert('Alert details: '+ item.description)}
+          />
           <DialogFooter>
-            <PrimaryButton
-              onClick={() => {
-                toggleHideThirdDialog();
-              }}
-              text="Save"
-            />
             <DefaultButton onClick={toggleHideThirdDialog} text="Cancel" />
           </DialogFooter>
         </Dialog>
