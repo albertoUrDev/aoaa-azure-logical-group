@@ -184,7 +184,7 @@ function App() {
       display: "flex",
       flexFlow: "column nowrap",
       alignItems: "stretch",
-      width: "700px",
+      width: "900px",
     },
     header: [
       theme.fonts.xxLarge,
