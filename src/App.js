@@ -26,7 +26,8 @@ function App() {
   const [hideThirdDialog, { toggle: toggleHideThirdDialog }] = useBoolean(true);
   const [name, setName] = React.useState();
   const [owner, setOwner] = React.useState();
-  const [budget, setBudget] = React.useState();
+    const [budget, setBudget] = React.useState();
+
   const defaultGroup = [
     {
       key: "Optimus Group",
@@ -51,7 +52,7 @@ function App() {
     },
   ];
   const [group, setGroup] = React.useState(defaultGroup);
-  const columns = [
+    const columns = [
     {
       key: "Group Name",
       name: "GroupName",
@@ -73,8 +74,13 @@ function App() {
       minWidth: 300,
       maxWidth: 300,
     },
-  ];
-  const items = [
+    ];
+    
+
+    const tempColumns = [];
+    const [newColumns, setTempColumns] = React.useState(tempColumns);
+
+    const defaultItems = [
     {
       key: "budgetforecastpremium-prod",
       GroupName: "budgetforecastpremium-prod",
@@ -113,7 +119,8 @@ function App() {
       Description: "storageAccounts",
       Subscription: "MSFT-AOAAnalytics-Prod/GenevaWarmPathManageRG",
     },
-  ];
+    ];
+    const [items, setItems] = React.useState(defaultItems);
   // This is based on the definition of items
 
   const ModalStyle = mergeStyleSets({
@@ -123,56 +130,57 @@ function App() {
       alignItems: "stretch",
     },
   });
-  const options2 = [
-    {
-      key: "budgetforecastpremium-prod",
-      text: "budgetforecastpremium-prod",
-    },
-    {
-      key: "budgetalertdetection-prod-law",
-      text: "budgetalertdetection-prod-law",
-    },
-    {
-      key: "azsk20200604225038",
-      text: "azsk20200604225038",
-    },
-    {
-      key: "cognitoprod",
-      text: "cognitoprod",
-    },
-    {
-      key: "azskcseaoaasa",
-      text: "azskcseaoaasa",
-    },
-    {
-      key: "gsm625068112xt",
-      text: "gsm625068112xt",
-    },
-    {
-      key: "synccorefunction20200609",
-      text: "synccorefunction20200609",
-    },
-    {
-      key: "TESTFACTORY20210503235301",
-      text: "TESTFACTORY20210503235301",
-    },
-    {
-      key: "hackathoncostusage",
-      text: "hackathoncostusage",
-    },
-    {
-      key: "desperado-dev",
-      text: "desperado-dev",
-    },
-    {
-      key: "budgetforecastpremium-dev",
-      text: "budgetforecastpremium-dev",
-    },
-    {
-      key: "azproactivestorage",
-      text: "azproactivestorage",
-    },
-  ];
+    const options2 = [
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2/sites/budgetforecastpremium-prod",
+                "text": "budgetforecastpremium-prod"
+            },
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2/workspaces/budgetalertdetection-prod-law",
+                "text": "budgetalertdetection-prod-law"
+            },
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-02/AzSKRG/storageAccounts/azsk20200604225038",
+                "text": "azsk20200604225038"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-Prod/cognitoprod/Clusters/cognitoprod",
+                "text": "cognitoprod"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-Prod/azsk-cse-aoaa-rg/storageAccounts/azskcseaoaasa",
+                "text": "azskcseaoaasa"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-Prod/GenevaWarmPathManageRG/storageAccounts/gsm625068112xt",
+                "text": "gsm625068112xt"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-PPE/npr-binli/storageAccounts/synccorefunction20200609",
+                "text": "synccorefunction20200609"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-PPE/OPTIMUSDEV/FACTORIES/TESTFACTORY20210503235301",
+                "text": "TESTFACTORY20210503235301"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-PPE/CognitoDev/Clusters/hackathoncostusage",
+                "text": "hackathoncostusage"
+            },
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-01/npr-budgetforecastalerting/sites/desperado-dev",
+                "text": "desperado-dev"
+            },
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-01/npr-budgetforecastalerting/sites/budgetforecastpremium-dev",
+                "text": "budgetforecastpremium-dev"
+            },
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-01/NPR-az-Proactive-reporting/storageAccounts/azproactivestorage",
+                "text": "azproactivestorage"
+            }
+        
+    ];
   const alertList = [
     {
       key: "Alert1",
@@ -259,7 +267,24 @@ function App() {
     },
   };
 
-  function addBudgetGroup() {
+    function addBudgetGroup() {
+        for (var i = 0; i < newColumns.length; i++) {
+            console.log(newColumns[i]["key"].split("/"));
+            //Do something
+            const splitted = newColumns[i]["key"].split("/")
+            const subscription = splitted[0] + "/" + splitted[1]
+            const type = splitted[2]
+
+            items.push(
+                {
+                    key: newColumns[i]["text"],
+                    GroupName: newColumns[i]["text"],
+                    Description: type,
+                    Subscription:
+                    subscription,
+                },
+            )
+        }
     // items.push({
     //   key: "Test test",
     //   GroupName: "Test test",
@@ -269,11 +294,13 @@ function App() {
       key: name,
       name: name + " - " + budget,
       startIndex: 6,
-      count: 1,
+        count: newColumns.length,
       level: 0,
     });
+        setItems(items);
     setGroup(group);
-  }
+}
+
 
   return (
     <>
@@ -370,7 +397,8 @@ function App() {
               options={options2}
               styles={{ root: { width: 300 } }}
               onChange={(event, option) => {
-                console.log(option);
+                  newColumns.push(option);
+                  setTempColumns(newColumns);
               }}
             />
             <DialogFooter>
