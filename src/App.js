@@ -27,7 +27,6 @@ function getGroups1() {
   response.open("POST", 'https://cognitodev.westus2.kusto.windows.net/v2/rest/query');
   response.setRequestHeader('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCIsImtpZCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCJ9.eyJhdWQiOiJodHRwczovL2hlbHAua3VzdG8ud2luZG93cy5uZXQvIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3LyIsImlhdCI6MTYzNDMzNzEyOSwibmJmIjoxNjM0MzM3MTI5LCJleHAiOjE2MzQzNDEwMjcsImFjciI6IjEiLCJhaW8iOiJBVlFBcS84VEFBQUF4OExJM3RnQVowd1NhckpQRXRIQllsS3JaN0UxSEdBRUFzUGhId1IyRWo4Y3NmOW8zR2JkdHc2N3RsVWRwVnVubmNFQy9OMklnY0kyTTJreWhHTWdTOXFHT1dOUTBVWWF6dlZ3MWpkdlpTQT0iLCJhbXIiOlsicnNhIiwibWZhIl0sImFwcGlkIjoiMDg2MTc1MjEtNmQ3Ni00ZWIwLWIzMzYtYTllZmVmMGQ4YTY4IiwiYXBwaWRhY3IiOiIyIiwiZGV2aWNlaWQiOiIzMWU4NGVjNC05YjZiLTRiNzItOTIyNy1hYTM2MWY4YzlhZDYiLCJmYW1pbHlfbmFtZSI6IkxpIiwiZ2l2ZW5fbmFtZSI6IkJpbiIsImlwYWRkciI6IjY2LjIzNS40LjEwIiwibmFtZSI6IkJpbiBMaSIsIm9pZCI6IjQ2MjVkMzMzLTIwZTgtNDg5Ni05MzYxLTIxZTljM2VlMzk3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0zOTc5NTU0MTctNjI2ODgxMTI2LTE4ODQ0MTQ0NC0yMjAzODg1IiwicHVpZCI6IjEwMDMwMDAwODAwNkJGN0MiLCJyaCI6IjAuQVJvQXY0ajVjdkdHcjBHUnF5MTgwQkhiUnlGMVlRaDJiYkJPc3phcDctOE5pbWdhQUYwLiIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInN1YiI6ImRaeHVneGtTZGJQbDU5NzlzbEU1WlM3bEJZRlZlM1Fuc3p4Nk1NVzBEUVkiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1bmlxdWVfbmFtZSI6ImJpbmxpQG50ZGV2Lm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJiaW5saUBudGRldi5taWNyb3NvZnQuY29tIiwidXRpIjoidC1fUk9XYzdMa3lIS0RHajZPNFpBQSIsInZlciI6IjEuMCJ9.m0bMVMb2DKkV7TWRUUp3B0WL0nCGbwqpV8fcx_6tLD8dRS3ZxHXsq2WFmvzwQwqEHPlg-hGcPd90zgZK1S1WQqqUczWnz25QNybt5oIeWsE-tugZr_L6cGqk_Sbx4Y5AA9Jn_O3g0dz6Ija-aTjRprqyOyY6OixCKDTkJ1WjkKOflfHz07XB8Vma-VjK7lRE1GNGEXlZMlHj27X9aYytXHjIK2Uo1rqXRp3NwWitNVjIqMoOdBnx4cw622fm7AoIPydBoxWnBRhHNMKwpfszmNITPctwzEhTVkLPVL_S1OJXgRXNY1KJy2ALUN70bhWYL3-P-_Ds64pk0RymrBGSrg');
   response.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  //response.setRequestHeader('Accept-Encoding', 'gzip, deflate, br');
   response.setRequestHeader('Accept', 'application/json');
 
   response.send(requestBody);
@@ -37,18 +36,65 @@ function getGroups1() {
   }
 }
 
-function getGroups2() {
-  console.log('getGroups2');
+function addGroup(token) {
+  console.log('addGroup');
 
-  const url = 'https://cognitodev.westus2.kusto.windows.net/v2/rest/query';
-  const getGroupsRequestBody = {"db":"hackathonproject","csl":"getBudgetGroups\r\n","properties":{"Options":{"servertimeout":"00:04:00","queryconsistency":"strongconsistency","query_language":"csl","request_readonly":false,"request_readonly_hardline":false}}};
-  const token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCIsImtpZCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCJ9.eyJhdWQiOiJodHRwczovL2hlbHAua3VzdG8ud2luZG93cy5uZXQvIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3LyIsImlhdCI6MTYzNDMzNzEyOSwibmJmIjoxNjM0MzM3MTI5LCJleHAiOjE2MzQzNDEwMjcsImFjciI6IjEiLCJhaW8iOiJBVlFBcS84VEFBQUF4OExJM3RnQVowd1NhckpQRXRIQllsS3JaN0UxSEdBRUFzUGhId1IyRWo4Y3NmOW8zR2JkdHc2N3RsVWRwVnVubmNFQy9OMklnY0kyTTJreWhHTWdTOXFHT1dOUTBVWWF6dlZ3MWpkdlpTQT0iLCJhbXIiOlsicnNhIiwibWZhIl0sImFwcGlkIjoiMDg2MTc1MjEtNmQ3Ni00ZWIwLWIzMzYtYTllZmVmMGQ4YTY4IiwiYXBwaWRhY3IiOiIyIiwiZGV2aWNlaWQiOiIzMWU4NGVjNC05YjZiLTRiNzItOTIyNy1hYTM2MWY4YzlhZDYiLCJmYW1pbHlfbmFtZSI6IkxpIiwiZ2l2ZW5fbmFtZSI6IkJpbiIsImlwYWRkciI6IjY2LjIzNS40LjEwIiwibmFtZSI6IkJpbiBMaSIsIm9pZCI6IjQ2MjVkMzMzLTIwZTgtNDg5Ni05MzYxLTIxZTljM2VlMzk3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0zOTc5NTU0MTctNjI2ODgxMTI2LTE4ODQ0MTQ0NC0yMjAzODg1IiwicHVpZCI6IjEwMDMwMDAwODAwNkJGN0MiLCJyaCI6IjAuQVJvQXY0ajVjdkdHcjBHUnF5MTgwQkhiUnlGMVlRaDJiYkJPc3phcDctOE5pbWdhQUYwLiIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInN1YiI6ImRaeHVneGtTZGJQbDU5NzlzbEU1WlM3bEJZRlZlM1Fuc3p4Nk1NVzBEUVkiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1bmlxdWVfbmFtZSI6ImJpbmxpQG50ZGV2Lm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJiaW5saUBudGRldi5taWNyb3NvZnQuY29tIiwidXRpIjoidC1fUk9XYzdMa3lIS0RHajZPNFpBQSIsInZlciI6IjEuMCJ9.m0bMVMb2DKkV7TWRUUp3B0WL0nCGbwqpV8fcx_6tLD8dRS3ZxHXsq2WFmvzwQwqEHPlg-hGcPd90zgZK1S1WQqqUczWnz25QNybt5oIeWsE-tugZr_L6cGqk_Sbx4Y5AA9Jn_O3g0dz6Ija-aTjRprqyOyY6OixCKDTkJ1WjkKOflfHz07XB8Vma-VjK7lRE1GNGEXlZMlHj27X9aYytXHjIK2Uo1rqXRp3NwWitNVjIqMoOdBnx4cw622fm7AoIPydBoxWnBRhHNMKwpfszmNITPctwzEhTVkLPVL_S1OJXgRXNY1KJy2ALUN70bhWYL3-P-_Ds64pk0RymrBGSrg';
+  const url = 'https://cognitodev.westus2.kusto.windows.net/v1/rest/mgmt';
+  const body = {"db":"hackathonproject","csl":".set-or-append Group <| print Id = new_guid(), Name = \"Budget Group 1015\", Owner = \"o1\", Budget = 1000.0, BudgetThresold = 100, Timestamp = now()","properties":{"Options":{"query_language":"csl","servertimeout":"00:04:00","queryconsistency":"strongconsistency","request_readonly":false,"request_readonly_hardline":false}}};
 
   fetch(
     url,
     {
       headers: {
-        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCIsImtpZCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCJ9.eyJhdWQiOiJodHRwczovL2hlbHAua3VzdG8ud2luZG93cy5uZXQvIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3LyIsImlhdCI6MTYzNDMzNzEyOSwibmJmIjoxNjM0MzM3MTI5LCJleHAiOjE2MzQzNDEwMjcsImFjciI6IjEiLCJhaW8iOiJBVlFBcS84VEFBQUF4OExJM3RnQVowd1NhckpQRXRIQllsS3JaN0UxSEdBRUFzUGhId1IyRWo4Y3NmOW8zR2JkdHc2N3RsVWRwVnVubmNFQy9OMklnY0kyTTJreWhHTWdTOXFHT1dOUTBVWWF6dlZ3MWpkdlpTQT0iLCJhbXIiOlsicnNhIiwibWZhIl0sImFwcGlkIjoiMDg2MTc1MjEtNmQ3Ni00ZWIwLWIzMzYtYTllZmVmMGQ4YTY4IiwiYXBwaWRhY3IiOiIyIiwiZGV2aWNlaWQiOiIzMWU4NGVjNC05YjZiLTRiNzItOTIyNy1hYTM2MWY4YzlhZDYiLCJmYW1pbHlfbmFtZSI6IkxpIiwiZ2l2ZW5fbmFtZSI6IkJpbiIsImlwYWRkciI6IjY2LjIzNS40LjEwIiwibmFtZSI6IkJpbiBMaSIsIm9pZCI6IjQ2MjVkMzMzLTIwZTgtNDg5Ni05MzYxLTIxZTljM2VlMzk3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0zOTc5NTU0MTctNjI2ODgxMTI2LTE4ODQ0MTQ0NC0yMjAzODg1IiwicHVpZCI6IjEwMDMwMDAwODAwNkJGN0MiLCJyaCI6IjAuQVJvQXY0ajVjdkdHcjBHUnF5MTgwQkhiUnlGMVlRaDJiYkJPc3phcDctOE5pbWdhQUYwLiIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInN1YiI6ImRaeHVneGtTZGJQbDU5NzlzbEU1WlM3bEJZRlZlM1Fuc3p4Nk1NVzBEUVkiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1bmlxdWVfbmFtZSI6ImJpbmxpQG50ZGV2Lm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJiaW5saUBudGRldi5taWNyb3NvZnQuY29tIiwidXRpIjoidC1fUk9XYzdMa3lIS0RHajZPNFpBQSIsInZlciI6IjEuMCJ9.m0bMVMb2DKkV7TWRUUp3B0WL0nCGbwqpV8fcx_6tLD8dRS3ZxHXsq2WFmvzwQwqEHPlg-hGcPd90zgZK1S1WQqqUczWnz25QNybt5oIeWsE-tugZr_L6cGqk_Sbx4Y5AA9Jn_O3g0dz6Ija-aTjRprqyOyY6OixCKDTkJ1WjkKOflfHz07XB8Vma-VjK7lRE1GNGEXlZMlHj27X9aYytXHjIK2Uo1rqXRp3NwWitNVjIqMoOdBnx4cw622fm7AoIPydBoxWnBRhHNMKwpfszmNITPctwzEhTVkLPVL_S1OJXgRXNY1KJy2ALUN70bhWYL3-P-_Ds64pk0RymrBGSrg",
+        "Authorization": token,
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json"   
+      },
+      body: JSON.stringify(body),
+      method: "POST"
+    }
+  )
+  .then(data => data.json())
+  .then((json) => {
+    console.log('addGroup:\r\n' + JSON.stringify(json));
+  });
+}
+
+function addAlert(token) {
+  console.log('addAlert');
+
+  const url = 'https://cognitodev.westus2.kusto.windows.net/v1/rest/mgmt';
+  const body = {"db":"hackathonproject","csl":".set-or-append Alert <|\n    print Id = new_guid(), Type = \"OverBudget\", GroupId = new_guid(), GeneratedOn = now()","properties":{"Options":{"query_language":"csl","servertimeout":"00:04:00","queryconsistency":"strongconsistency","request_readonly":false,"request_readonly_hardline":false}}};
+
+  fetch(
+    url,
+    {
+      headers: {
+        "Authorization": token,
+        "Content-Type": "application/json; charset=UTF-8",
+        "Accept": "application/json"   
+      },
+      body: JSON.stringify(body),
+      method: "POST"
+    }
+  )
+  .then(data => data.json()
+  .then((json) => {
+    console.log('addAlert:\r\n' + JSON.stringify(json));
+  }))
+}
+
+function getGroups2(token) {
+  console.log('getGroups2');
+
+  const url = 'https://cognitodev.westus2.kusto.windows.net/v2/rest/query';
+  const getGroupsRequestBody = {"db":"hackathonproject","csl":"getBudgetGroups\r\n","properties":{"Options":{"servertimeout":"00:04:00","queryconsistency":"strongconsistency","query_language":"csl","request_readonly":false,"request_readonly_hardline":false}}};
+
+  fetch(
+    url,
+    {
+      headers: {
+        "Authorization": token,
         "Content-Type": "application/json; charset=UTF-8",
         "Accept": "application/json"   
       },
@@ -56,14 +102,18 @@ function getGroups2() {
       method: "POST"
     }
   )
-  .then(data => data.json()
+  .then(data => data.json())
   .then((json) => {
-    console.log('getGroups2:\r\n' + JSON.stringify(json))
-  }))
+    console.log('getGroups2:\r\n' + JSON.stringify(json));
+  });
 }
 
 function App() {
-  getGroups2();
+  const token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCIsImtpZCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCJ9.eyJhdWQiOiJodHRwczovL2hlbHAua3VzdG8ud2luZG93cy5uZXQvIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3LyIsImlhdCI6MTYzNDM0MDczMywibmJmIjoxNjM0MzQwNzMzLCJleHAiOjE2MzQzNDQ2MzIsImFjciI6IjEiLCJhaW8iOiJBVlFBcS84VEFBQUFLSE5scnZwQzR4VUJrWUlpTVYxWno4N0Q1dEhNRjBBTWM1cGlPb1B2bzZKRDE2c2FRbkdqbGRsZXlIeDh5clRYT1NSQ0tLTVlkdFlMOWpkcEFId09zNkhjNzJQQ0M5MUNMZHc3cFlrcHhuST0iLCJhbXIiOlsicnNhIiwibWZhIl0sImFwcGlkIjoiMDg2MTc1MjEtNmQ3Ni00ZWIwLWIzMzYtYTllZmVmMGQ4YTY4IiwiYXBwaWRhY3IiOiIyIiwiZGV2aWNlaWQiOiIzMWU4NGVjNC05YjZiLTRiNzItOTIyNy1hYTM2MWY4YzlhZDYiLCJmYW1pbHlfbmFtZSI6IkxpIiwiZ2l2ZW5fbmFtZSI6IkJpbiIsImlwYWRkciI6IjY2LjIzNS40LjEwIiwibmFtZSI6IkJpbiBMaSIsIm9pZCI6IjQ2MjVkMzMzLTIwZTgtNDg5Ni05MzYxLTIxZTljM2VlMzk3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0zOTc5NTU0MTctNjI2ODgxMTI2LTE4ODQ0MTQ0NC0yMjAzODg1IiwicHVpZCI6IjEwMDMwMDAwODAwNkJGN0MiLCJyaCI6IjAuQVJvQXY0ajVjdkdHcjBHUnF5MTgwQkhiUnlGMVlRaDJiYkJPc3phcDctOE5pbWdhQUYwLiIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInN1YiI6ImRaeHVneGtTZGJQbDU5NzlzbEU1WlM3bEJZRlZlM1Fuc3p4Nk1NVzBEUVkiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1bmlxdWVfbmFtZSI6ImJpbmxpQG50ZGV2Lm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJiaW5saUBudGRldi5taWNyb3NvZnQuY29tIiwidXRpIjoicVplUFZqb2pnRUdQSmRqN3R3UW5BQSIsInZlciI6IjEuMCJ9.UN9DZw9W0H0BWu9QjRgJzXS2kdtko8e4CndQTjPLzqBfbLdRSD58KwBfcy7LhA_qR7OkHAhGq8jexAjF9c13yWtVgXK543qNwhWMde9Y5sNxVR8moPmQgQw55ykPIdBF18Hi5l4--KYkfp78EPv0PgSURihOvphRtfKakMMcYvNA_2ar0MXb2W6oOnRr28xmlVK1TduwAjHOkrWIXm398hSpU2ABnl3fiMFVGiMdyhFGTTAUBfQOEBJMpdQgwxB9nnwXrUQK8gxLHGQZSKXEND60lV04pGsLIRpT-_WGP0zdSncV81h6YInqwR9UI_HZiURzye2UhMd_mQTy0n4UoQ';
+
+  getGroups2(token);
+  addGroup(token);
+  addAlert(token);
 
   const [hideFirstDialog, { toggle: toggleHideFirstDialog }] = useBoolean(true);
   const [hideSecondDialog, { toggle: toggleHideSecondDialog }] =
