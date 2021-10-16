@@ -69,13 +69,13 @@ function removeAlert(item){
       count: 1,
       level: 0,
     },
-    {
+    /*{
       key: "Another Group",
       name: "Another Group - 1010",
       startIndex: 3,
       count: 3,
       level: 0,
-    },
+    },*/
   ];
   const [group, setGroup] = React.useState(defaultGroup);
     const columns = [
@@ -235,8 +235,8 @@ function removeAlert(item){
       key: "description",
       name: "Description",
       fieldName: "description",
-      minWidth: 150,
-      maxWidth: 300,
+      minWidth: 350,
+      maxWidth: 500,
       isResizable: true,
     },
     {
