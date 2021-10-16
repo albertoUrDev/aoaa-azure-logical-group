@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from 'react';
+import { useState } from "react";
 import {
   DefaultButton,
   Modal,
@@ -21,14 +21,13 @@ import {
 import { useBoolean } from "@fluentui/react-hooks";
 
 function App() {
-
   const [hideFirstDialog, { toggle: toggleHideFirstDialog }] = useBoolean(true);
-  const [hideSecondDialog, { toggle: toggleHideSecondDialog }] = useBoolean(true);
+  const [hideSecondDialog, { toggle: toggleHideSecondDialog }] =
+    useBoolean(true);
   const [hideThirdDialog, { toggle: toggleHideThirdDialog }] = useBoolean(true);
   const [name, setName] = React.useState();
   const [owner, setOwner] = React.useState();
-    const [budget, setBudget] = React.useState();
-
+  const [budget, setBudget] = React.useState();
 
   const [alertListState, setAlerts] = useState([
     {
@@ -42,17 +41,16 @@ function App() {
       description: "Some Group 2 has gone over its $100 budget",
     },
   ]);
-  
-function removeAlert(item){
-  let result = [];
-              for(let i = 0; i < alertListState.length; ++i){
-                console.log(alertListState[i]);
-                if(alertListState[i].key !== item.key){
-                  result.push(alertListState[i]);
-                }
-                setAlerts(result);
-              }
-}
+
+  function removeAlert(item) {
+    let result = [];
+    for (let i = 0; i < alertListState.length; ++i) {
+      if (alertListState[i].key !== item.key) {
+        result.push(alertListState[i]);
+      }
+      setAlerts(result);
+    }
+  }
 
   const defaultGroup = [
     {
@@ -78,7 +76,7 @@ function removeAlert(item){
     },
   ];
   const [group, setGroup] = React.useState(defaultGroup);
-    const columns = [
+  const columns = [
     {
       key: "Group Name",
       name: "GroupName",
@@ -100,13 +98,12 @@ function removeAlert(item){
       minWidth: 300,
       maxWidth: 300,
     },
-    ];
-    
+  ];
 
-    const tempColumns = [];
-    const [newColumns, setTempColumns] = React.useState(tempColumns);
+  const tempColumns = [];
+  const [newColumns, setTempColumns] = React.useState(tempColumns);
 
-    const defaultItems = [
+  const defaultItems = [
     {
       key: "budgetforecastpremium-prod",
       GroupName: "budgetforecastpremium-prod",
@@ -145,8 +142,8 @@ function removeAlert(item){
       Description: "storageAccounts",
       Subscription: "MSFT-AOAAnalytics-Prod/GenevaWarmPathManageRG",
     },
-    ];
-    const [items, setItems] = React.useState(defaultItems);
+  ];
+  const [items, setItems] = React.useState(defaultItems);
   // This is based on the definition of items
 
   const ModalStyle = mergeStyleSets({
@@ -156,68 +153,56 @@ function removeAlert(item){
       alignItems: "stretch",
     },
   });
-    const options2 = [
-            {
-                "key": "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2/sites/budgetforecastpremium-prod",
-                "text": "budgetforecastpremium-prod"
-            },
-            {
-                "key": "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2/workspaces/budgetalertdetection-prod-law",
-                "text": "budgetalertdetection-prod-law"
-            },
-            {
-                "key": "MSFT-AOABudgetForecastingNAlert-02/AzSKRG/storageAccounts/azsk20200604225038",
-                "text": "azsk20200604225038"
-            },
-            {
-                "key": "MSFT-AOAAnalytics-Prod/cognitoprod/Clusters/cognitoprod",
-                "text": "cognitoprod"
-            },
-            {
-                "key": "MSFT-AOAAnalytics-Prod/azsk-cse-aoaa-rg/storageAccounts/azskcseaoaasa",
-                "text": "azskcseaoaasa"
-            },
-            {
-                "key": "MSFT-AOAAnalytics-Prod/GenevaWarmPathManageRG/storageAccounts/gsm625068112xt",
-                "text": "gsm625068112xt"
-            },
-            {
-                "key": "MSFT-AOAAnalytics-PPE/npr-binli/storageAccounts/synccorefunction20200609",
-                "text": "synccorefunction20200609"
-            },
-            {
-                "key": "MSFT-AOAAnalytics-PPE/OPTIMUSDEV/FACTORIES/TESTFACTORY20210503235301",
-                "text": "TESTFACTORY20210503235301"
-            },
-            {
-                "key": "MSFT-AOAAnalytics-PPE/CognitoDev/Clusters/hackathoncostusage",
-                "text": "hackathoncostusage"
-            },
-            {
-                "key": "MSFT-AOABudgetForecastingNAlert-01/npr-budgetforecastalerting/sites/desperado-dev",
-                "text": "desperado-dev"
-            },
-            {
-                "key": "MSFT-AOABudgetForecastingNAlert-01/npr-budgetforecastalerting/sites/budgetforecastpremium-dev",
-                "text": "budgetforecastpremium-dev"
-            },
-            {
-                "key": "MSFT-AOABudgetForecastingNAlert-01/NPR-az-Proactive-reporting/storageAccounts/azproactivestorage",
-                "text": "azproactivestorage"
-            }
-        
-    ];
-
-  const alertList = alertListState;
-  const modelProps = {
-    isBlocking: true,
-  };
-  const dialogContentProps = {
-    title: "Budget Groups",
-  };
-  const dialog2ContentProps = {
-    title: "Create Budget Groups",
-  };
+  const options2 = [
+    {
+      key: "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2/sites/budgetforecastpremium-prod",
+      text: "budgetforecastpremium-prod",
+    },
+    {
+      key: "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2/workspaces/budgetalertdetection-prod-law",
+      text: "budgetalertdetection-prod-law",
+    },
+    {
+      key: "MSFT-AOABudgetForecastingNAlert-02/AzSKRG/storageAccounts/azsk20200604225038",
+      text: "azsk20200604225038",
+    },
+    {
+      key: "MSFT-AOAAnalytics-Prod/cognitoprod/Clusters/cognitoprod",
+      text: "cognitoprod",
+    },
+    {
+      key: "MSFT-AOAAnalytics-Prod/azsk-cse-aoaa-rg/storageAccounts/azskcseaoaasa",
+      text: "azskcseaoaasa",
+    },
+    {
+      key: "MSFT-AOAAnalytics-Prod/GenevaWarmPathManageRG/storageAccounts/gsm625068112xt",
+      text: "gsm625068112xt",
+    },
+    {
+      key: "MSFT-AOAAnalytics-PPE/npr-binli/storageAccounts/synccorefunction20200609",
+      text: "synccorefunction20200609",
+    },
+    {
+      key: "MSFT-AOAAnalytics-PPE/OPTIMUSDEV/FACTORIES/TESTFACTORY20210503235301",
+      text: "TESTFACTORY20210503235301",
+    },
+    {
+      key: "MSFT-AOAAnalytics-PPE/CognitoDev/Clusters/hackathoncostusage",
+      text: "hackathoncostusage",
+    },
+    {
+      key: "MSFT-AOABudgetForecastingNAlert-01/npr-budgetforecastalerting/sites/desperado-dev",
+      text: "desperado-dev",
+    },
+    {
+      key: "MSFT-AOABudgetForecastingNAlert-01/npr-budgetforecastalerting/sites/budgetforecastpremium-dev",
+      text: "budgetforecastpremium-dev",
+    },
+    {
+      key: "MSFT-AOABudgetForecastingNAlert-01/NPR-az-Proactive-reporting/storageAccounts/azproactivestorage",
+      text: "azproactivestorage",
+    },
+  ];
 
   const dialog3ContentProps = {
     title: "Alerts",
@@ -227,37 +212,34 @@ function removeAlert(item){
       key: "alertName",
       name: "Alert Name",
       fieldName: "alertName",
-      minWidth: 100,
-      maxWidth: 200,
+      minWidth: 400,
+      maxWidth: 400,
       isResizable: true,
     },
     {
       key: "description",
       name: "Description",
       fieldName: "description",
-      minWidth: 150,
-      maxWidth: 300,
+      minWidth: 400,
+      maxWidth: 400,
       isResizable: true,
     },
     {
       key: "delete",
       name: "Delete",
       fieldName: "delete",
-      minWidth: 50,
-      maxWidth: 100,
+      minWidth: 200,
+      maxWidth: 200,
       isResizable: true,
       onRender: (item) => (
-        <DefaultButton onClick={ ()=>removeAlert(item)} text="X" />
-      )
+        <DefaultButton onClick={() => removeAlert(item)} text="X" />
+      ),
     },
   ];
 
-
-
-
- function componentDidMount(){
-  setAlerts(alertList);
-}
+  //  function componentDidMount(){
+  //   setAlerts(alertList);
+  // }
 
   const theme = getTheme();
   const contentStyles = mergeStyleSets({
@@ -302,41 +284,39 @@ function removeAlert(item){
     },
   };
 
-    function addBudgetGroup() {
-        for (var i = 0; i < newColumns.length; i++) {
-            console.log(newColumns[i]["key"].split("/"));
-            //Do something
-            const splitted = newColumns[i]["key"].split("/")
-            const subscription = splitted[0] + "/" + splitted[1]
-            const type = splitted[2]
+  function addBudgetGroup() {
+    for (var i = 0; i < newColumns.length; i++) {
+      console.log(newColumns[i]["key"].split("/"));
+      //Do something
+      const splitted = newColumns[i]["key"].split("/");
+      const subscription = splitted[0] + "/" + splitted[1];
+      const type = splitted[2];
 
-            items.push(
-                {
-                    key: newColumns[i]["text"],
-                    GroupName: newColumns[i]["text"],
-                    Description: type,
-                    Subscription:
-                    subscription,
-                },
-            )
-        }
-    // items.push({
-    //   key: "Test test",
-    //   GroupName: "Test test",
-    //   Description: "Test test",
-    // });
+      items.push({
+        key: newColumns[i]["text"],
+        GroupName: newColumns[i]["text"],
+        Description: type,
+        Subscription: subscription,
+      });
+    }
     group.push({
       key: name,
       name: name + " - " + budget,
       startIndex: 6,
-        count: newColumns.length,
+      count: newColumns.length,
       level: 0,
     });
-        setItems(items);
+    setItems(items);
     setGroup(group);
-}
-
-
+    //manually add new alerts
+    const newCreatedAlarm = {
+      key: "Alert3",
+      alertName: "Alart for " + name,
+      description: name + " has gone over its $" + budget + " budget",
+    };
+    alertListState.push(newCreatedAlarm);
+    setAlerts(alertListState);
+  }
 
   return (
     <>
@@ -433,8 +413,8 @@ function removeAlert(item){
               options={options2}
               styles={{ root: { width: 300 } }}
               onChange={(event, option) => {
-                  newColumns.push(option);
-                  setTempColumns(newColumns);
+                newColumns.push(option);
+                setTempColumns(newColumns);
               }}
             />
             <DialogFooter>
@@ -463,7 +443,6 @@ function removeAlert(item){
           isBlocking={false}
           containerClassName={ModalStyle.container}
         >
-
           <div className={contentStyles.header}>
             <h1>Alerts</h1>
             <IconButton
