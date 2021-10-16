@@ -67,13 +67,13 @@ function App() {
       count: 1,
       level: 0,
     },
-    {
+    /*{
       key: "Another Group",
       name: "Another Group - 1010",
       startIndex: 3,
       count: 3,
       level: 0,
-    },
+    },*/
   ];
   const [group, setGroup] = React.useState(defaultGroup);
   const columns = [
@@ -220,8 +220,13 @@ function App() {
       key: "description",
       name: "Description",
       fieldName: "description",
+<<<<<<< HEAD
       minWidth: 400,
       maxWidth: 400,
+=======
+      minWidth: 350,
+      maxWidth: 500,
+>>>>>>> fd0e413989a8623b393d907ae8eb4df3a8d64e43
       isResizable: true,
     },
     {
