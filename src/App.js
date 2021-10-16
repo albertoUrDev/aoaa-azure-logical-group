@@ -3,24 +3,21 @@ import { useState } from 'react';
 import {
   DefaultButton,
   Modal,
-  ChoiceGroup,
   DialogFooter,
   PrimaryButton,
   TextField,
   mergeStyleSets,
   Stack,
   DetailsRow,
-  MarqueeSelection,
   IconButton,
   getTheme,
   FontWeights,
-} from "@fluentui/react";
-import {
+  Dropdown,
   DetailsList,
   DetailsListLayoutMode,
   CheckboxVisibility,
   DetailsHeader,
-} from "@fluentui/react/lib/DetailsList";
+} from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
 
 function App() {
@@ -28,6 +25,10 @@ function App() {
   const [hideFirstDialog, { toggle: toggleHideFirstDialog }] = useBoolean(true);
   const [hideSecondDialog, { toggle: toggleHideSecondDialog }] = useBoolean(true);
   const [hideThirdDialog, { toggle: toggleHideThirdDialog }] = useBoolean(true);
+  const [name, setName] = React.useState();
+  const [owner, setOwner] = React.useState();
+    const [budget, setBudget] = React.useState();
+
 
   const [alertListState, setAlerts] = useState([
     {
@@ -53,80 +54,7 @@ function removeAlert(item){
               }
 }
 
-  const page1Content = [
-    {
-      Name: "Optimus Group",
-      Budget: 300,
-      resources: [
-        { Name: "Test Storage Account", type: "storage account" },
-        { Name: "Test Azure Function", type: "azure function" },
-      ],
-    },
-    {
-      Name: "Some Group",
-      Budget: 300,
-      resources: [{ Name: "Test Storage Account", type: "storage account" }],
-    },
-    {
-      Name: "Another Group",
-      Budget: 300,
-      resources: [
-        { Name: "Test Storage Account", type: "storage account" },
-        { Name: "Test Azure Function", type: "azure function" },
-        { Name: "Test App Service", type: "app service" },
-      ],
-    },
-  ];
-  const columns = [
-    {
-      key: "Group Name",
-      name: "GroupName",
-      fieldName: "GroupName",
-      minWidth: 200,
-      maxWidth: 200,
-    },
-    {
-      key: "Description",
-      name: "Description",
-      fieldName: "Description",
-      minWidth: 300,
-      maxWidth: 300,
-    },
-  ];
-  const items = [
-    {
-      key: "Test Storage Account",
-      GroupName: "Test Storage Account",
-      Description: "storage account",
-    },
-    {
-      key: "Test Azure Function",
-      GroupName: "Test Azure Function",
-      Description: "azure function",
-    },
-    {
-      key: "Test Storage Account",
-      GroupName: "Test Storage Account",
-      Description: "storage account",
-    },
-    {
-      key: "Test Storage Account",
-      GroupName: "Test Storage Account",
-      Description: "storage account",
-    },
-    {
-      key: "Test Azure Function",
-      GroupName: "Test Azure Function",
-      Description: "azure function",
-    },
-    {
-      key: "Test App Service",
-      GroupName: "Test App Service",
-      Description: "app service",
-    },
-  ];
-  // This is based on the definition of items
-  const groups = [
+  const defaultGroup = [
     {
       key: "Optimus Group",
       name: "Optimus Group - 500",
@@ -149,6 +77,78 @@ function removeAlert(item){
       level: 0,
     },
   ];
+  const [group, setGroup] = React.useState(defaultGroup);
+    const columns = [
+    {
+      key: "Group Name",
+      name: "GroupName",
+      fieldName: "GroupName",
+      minWidth: 200,
+      maxWidth: 200,
+    },
+    {
+      key: "Description",
+      name: "Type",
+      fieldName: "Description",
+      minWidth: 300,
+      maxWidth: 300,
+    },
+    {
+      key: "Subscription",
+      name: "Subscription/ResourceGroup",
+      fieldName: "Subscription",
+      minWidth: 300,
+      maxWidth: 300,
+    },
+    ];
+    
+
+    const tempColumns = [];
+    const [newColumns, setTempColumns] = React.useState(tempColumns);
+
+    const defaultItems = [
+    {
+      key: "budgetforecastpremium-prod",
+      GroupName: "budgetforecastpremium-prod",
+      Description: "sites",
+      Subscription:
+        "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2",
+    },
+    {
+      key: "budgetalertdetection-prod-law",
+      GroupName: "budgetalertdetection-prod-law",
+      Description: "workspaces",
+      Subscription:
+        "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2",
+    },
+    {
+      key: "azsk20200604225038",
+      GroupName: "azsk20200604225038",
+      Description: "storageAccounts",
+      Subscription: "MSFT-AOABudgetForecastingNAlert-02/AzSKRG",
+    },
+    {
+      key: "cognitoprod",
+      GroupName: "cognitoprod",
+      Description: "Clusters",
+      Subscription: "MSFT-AOAAnalytics-Prod/cognitoprod",
+    },
+    {
+      key: "azskcseaoaasa",
+      GroupName: "azskcseaoaasa",
+      Description: "storageAccounts",
+      Subscription: "MSFT-AOAAnalytics-Prod/azsk-cse-aoaa-rg",
+    },
+    {
+      key: "gsm625068112xt",
+      GroupName: "gsm625068112xt",
+      Description: "storageAccounts",
+      Subscription: "MSFT-AOAAnalytics-Prod/GenevaWarmPathManageRG",
+    },
+    ];
+    const [items, setItems] = React.useState(defaultItems);
+  // This is based on the definition of items
+
   const ModalStyle = mergeStyleSets({
     container: {
       display: "flex",
@@ -156,11 +156,57 @@ function removeAlert(item){
       alignItems: "stretch",
     },
   });
-  const options2 = [
-    { key: "Resource1", text: "Resource 1" },
-    { key: "Resource2", text: "Resource 2" },
-    { key: "Resource3", text: "Resource 3" },
-  ];
+    const options2 = [
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2/sites/budgetforecastpremium-prod",
+                "text": "budgetforecastpremium-prod"
+            },
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-02/prod-budgetnforecasting_v2/workspaces/budgetalertdetection-prod-law",
+                "text": "budgetalertdetection-prod-law"
+            },
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-02/AzSKRG/storageAccounts/azsk20200604225038",
+                "text": "azsk20200604225038"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-Prod/cognitoprod/Clusters/cognitoprod",
+                "text": "cognitoprod"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-Prod/azsk-cse-aoaa-rg/storageAccounts/azskcseaoaasa",
+                "text": "azskcseaoaasa"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-Prod/GenevaWarmPathManageRG/storageAccounts/gsm625068112xt",
+                "text": "gsm625068112xt"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-PPE/npr-binli/storageAccounts/synccorefunction20200609",
+                "text": "synccorefunction20200609"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-PPE/OPTIMUSDEV/FACTORIES/TESTFACTORY20210503235301",
+                "text": "TESTFACTORY20210503235301"
+            },
+            {
+                "key": "MSFT-AOAAnalytics-PPE/CognitoDev/Clusters/hackathoncostusage",
+                "text": "hackathoncostusage"
+            },
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-01/npr-budgetforecastalerting/sites/desperado-dev",
+                "text": "desperado-dev"
+            },
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-01/npr-budgetforecastalerting/sites/budgetforecastpremium-dev",
+                "text": "budgetforecastpremium-dev"
+            },
+            {
+                "key": "MSFT-AOABudgetForecastingNAlert-01/NPR-az-Proactive-reporting/storageAccounts/azproactivestorage",
+                "text": "azproactivestorage"
+            }
+        
+    ];
 
   const alertList = alertListState;
   const modelProps = {
@@ -256,6 +302,41 @@ function removeAlert(item){
     },
   };
 
+    function addBudgetGroup() {
+        for (var i = 0; i < newColumns.length; i++) {
+            console.log(newColumns[i]["key"].split("/"));
+            //Do something
+            const splitted = newColumns[i]["key"].split("/")
+            const subscription = splitted[0] + "/" + splitted[1]
+            const type = splitted[2]
+
+            items.push(
+                {
+                    key: newColumns[i]["text"],
+                    GroupName: newColumns[i]["text"],
+                    Description: type,
+                    Subscription:
+                    subscription,
+                },
+            )
+        }
+    // items.push({
+    //   key: "Test test",
+    //   GroupName: "Test test",
+    //   Description: "Test test",
+    // });
+    group.push({
+      key: name,
+      name: name + " - " + budget,
+      startIndex: 6,
+        count: newColumns.length,
+      level: 0,
+    });
+        setItems(items);
+    setGroup(group);
+}
+
+
 
   return (
     <>
@@ -283,7 +364,7 @@ function removeAlert(item){
           <div className={contentStyles.body}>
             <DetailsList
               items={items}
-              groups={groups}
+              groups={group}
               columns={columns}
               compact={true}
               onRenderDetailsHeader={(props) => (
@@ -323,14 +404,46 @@ function removeAlert(item){
             />
           </div>
           <div className={contentStyles.body}>
-            <TextField label="Name" />
-            <TextField label="Budget" />
-            <TextField label="Owner" />
-            <ChoiceGroup defaultSelectedKey="B" options={options2} />
+            <TextField
+              label="Name"
+              required
+              onChange={(_, newValue) => {
+                setName(newValue);
+              }}
+            />
+            <TextField
+              label="Budget"
+              required
+              onChange={(_, newValue) => {
+                setBudget(newValue);
+              }}
+            />
+            <TextField
+              label="Owner"
+              required
+              onChange={(_, newValue) => {
+                setOwner(newValue);
+              }}
+            />
+            <Dropdown
+              placeholder="Select resource(s)"
+              label="Select resource(s)"
+              multiSelect
+              required
+              options={options2}
+              styles={{ root: { width: 300 } }}
+              onChange={(event, option) => {
+                  newColumns.push(option);
+                  setTempColumns(newColumns);
+              }}
+            />
             <DialogFooter>
               <PrimaryButton
-                onClick={toggleHideSecondDialog}
-                text="Create Budget Group"
+                onClick={() => {
+                  addBudgetGroup();
+                  toggleHideSecondDialog();
+                }}
+                text="Create a new budget group"
               />
               <DefaultButton onClick={toggleHideSecondDialog} text="Cancel" />
             </DialogFooter>
