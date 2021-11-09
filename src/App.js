@@ -19,8 +19,12 @@ import {
   DetailsHeader,
 } from "@fluentui/react";
 import { useBoolean } from "@fluentui/react-hooks";
+import { initializeIcons } from '@fluentui/react/lib/Icons';
+
 
 function App() {
+  initializeIcons(/* optional base url */);
+
   const [hideFirstDialog, { toggle: toggleHideFirstDialog }] = useBoolean(true);
   const [hideSecondDialog, { toggle: toggleHideSecondDialog }] =
     useBoolean(true);
@@ -32,12 +36,12 @@ function App() {
   const [alertListState, setAlerts] = useState([
     {
       key: "Alert1",
-      alertName: "Optimus Group",
+      alertName: "Alert for Optimus Group",
       description: "Optimus Group has gone over its $500 budget",
     },
     {
       key: "Alert2",
-      alertName: "Some Group",
+      alertName: "Alert for Some Group",
       description: "Some Group 2 has gone over its $100 budget",
     },
   ]);
@@ -55,14 +59,14 @@ function App() {
   const defaultGroup = [
     {
       key: "Optimus Group",
-      name: "Optimus Group - 500",
+      name: "Optimus Group - $500",
       startIndex: 0,
       count: 2,
       level: 0,
     },
     {
       key: "Some Group",
-      name: "Some Group - 100",
+      name: "Some Group - $100",
       startIndex: 2,
       count: 1,
       level: 0,
@@ -263,7 +267,7 @@ function App() {
   });
   const iconButtonStyles = {
     root: {
-      color: theme.palette.neutralPrimary,
+      color: "theme.palette.neutralPrimary",
       marginLeft: "auto",
       marginTop: "4px",
       marginRight: "2px",
@@ -290,7 +294,7 @@ function App() {
     }
     group.push({
       key: name,
-      name: name + " - " + budget,
+      name: name + " - $" + budget,
       startIndex: 6,
       count: newColumns.length,
       level: 0,
@@ -300,7 +304,7 @@ function App() {
     //manually add new alerts
     const newCreatedAlarm = {
       key: "Alert3",
-      alertName: "Alart for " + name,
+      alertName: "Alert for " + name,
       description: name + " has gone over its $" + budget + " budget",
     };
     alertListState.push(newCreatedAlarm);
@@ -336,10 +340,13 @@ function App() {
               groups={group}
               columns={columns}
               compact={true}
+              styles={{color: "red"}}
+              selectionMode="none"
+              checkboxVisibility={CheckboxVisibility.hidden}
               onRenderDetailsHeader={(props) => (
                 <DetailsHeader
                   {...props}
-                  styles={{ root: { fontWeight: FontWeights.semibold } }}
+                  styles = {{ root: { fontWeight: FontWeights.semibold } }}
                 />
               )}
               onRenderRow={(props) => <DetailsRow {...props} />}
@@ -437,7 +444,7 @@ function App() {
             <IconButton
               styles={iconButtonStyles}
               iconProps={{ iconName: "Cancel" }}
-              onClick={toggleHideFirstDialog}
+              onClick={toggleHideThirdDialog}
             />
           </div>
           <div className={contentStyles.body}>
